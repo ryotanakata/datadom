@@ -31,7 +31,7 @@ type GetDataDomResult<T extends DataDoms> = {
  *
  * const elements = {
  *   title: 'Main title',
- *   text: 'Main content',
+ *   text: 'Main text',
  * };
  *
  * try {
