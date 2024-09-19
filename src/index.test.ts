@@ -19,7 +19,7 @@ describe("getDataDom", () => {
 
   it("should retrieve single elements by data attribute", () => {
     const elements = { title: "Title element", text: "Text element" };
-    const { title, text } = getDataDom(elements, '[data-dom-parent="parent"]');
+    const { title, text } = getDataDom(elements, "parent");
 
     if (!Array.isArray(title) && !Array.isArray(text)) {
       expect(title).toBeInstanceOf(HTMLElement);
@@ -34,7 +34,7 @@ describe("getDataDom", () => {
 
   it("should retrieve multiple elements as an array", () => {
     const elements = { item: "Item elements" };
-    const { item } = getDataDom(elements, '[data-dom-parent="parent"]');
+    const { item } = getDataDom(elements, "parent");
 
     expect(Array.isArray(item)).toBe(true);
     expect(item).toHaveLength(2);
@@ -46,15 +46,15 @@ describe("getDataDom", () => {
     const elements = { title: "Title element" };
 
     expect(() => {
-      getDataDom(elements, '[data-dom-parent="nonexistent"]');
-    }).toThrow('Parent element not found: [data-dom-parent="nonexistent"]');
+      getDataDom(elements, "nonexistent");
+    }).toThrow("Parent element not found: nonexistent");
   });
 
   it("should throw an error if child element is not found", () => {
     const elements = { nonexistent: "Nonexistent element" };
 
     expect(() => {
-      getDataDom(elements, '[data-dom-parent="parent"]');
+      getDataDom(elements, "parent");
     }).toThrow(
       'Element "Nonexistent element" not found (data-dom="nonexistent")',
     );
