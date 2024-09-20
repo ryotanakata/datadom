@@ -30,17 +30,46 @@ A lightweight utility for retrieving DOM elements using custom data attributes.
 
 ## Install
 
+### npm
+
 ```bash
 npm install datadom
 ```
 
+### yarn
+
+```bash
+yarn add datadom
+```
+
+### pnpm
+
+```bash
+pnpm add datadom
+```
+
+### CDN
+
+```html
+<script src="https://unpkg.com/datadom/dist/datadom.umd.js"></script>
+```
+
 ## Document
 
-| Argument            | Type                    | Default                    | Description                                                                                                              |
-| ------------------- | ----------------------- | -------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
-| `dataDoms`          | `Object`                | -                          | An object mapping element keys to their descriptions. Each key corresponds to a `data-dom` attribute value in your HTML. |
-| `parent`            | `string \| HTMLElement` | `document.documentElement` | The parent element or selector within which to search for elements. If a string is provided, it's used as a selector.    |
-| `dataAttributeName` | `string`                | `'dom'`                    | The name of the data attribute to use for selecting elements. By default, it uses `data-dom`.                            |
+### Argument
+
+| Argument   | Type             | Default | Description                                                                                                              |
+| ---------- | ---------------- | ------- | ------------------------------------------------------------------------------------------------------------------------ |
+| `elements` | `T`              | -       | An object mapping element keys to their descriptions. Each key corresponds to a `data-dom` attribute value in your HTML. |
+| `options`  | `DataDomOptions` | `{}`    | Optional configuration object.                                                                                           |
+
+### Options
+
+| Option              | Type                    | Default                    | Description                                                         |
+| ------------------- | ----------------------- | -------------------------- | ------------------------------------------------------------------- |
+| `parent`            | `string \| HTMLElement` | `document.documentElement` | The parent element or selector within which to search for elements. |
+| `dataAttributeName` | `string`                | `'dom'`                    | The name of the data attribute to use for selecting elements.       |
+| `errorThrow`        | `boolean`               | `true`                     | Whether to throw an error when elements are not found.              |
 
 ## Example
 
@@ -48,34 +77,98 @@ npm install datadom
 
 ```typescript
 const elements = {
-  title: "Title element",
-  content: "Content element",
+  title: "Main title",
+  text: "Main text",
 };
 
-const { title, content } = getDataDom(elements);
-
-console.log(title); // <h1 data-dom="title">Title</h1>
-console.log(content); // <p data-dom="content">Content</p>
+try {
+  const { title, text } = getDataDom(elements);
+  console.log(title); // <h1 data-dom="title">Title</h1>
+  console.log(text); // <p data-dom="text">Text</p>
+} catch (error) {
+  console.error("Error:", error.message);
+}
 ```
 
-### Using a Custom Parent and Data Attribute
+### Parent Option
 
 ```html
-<main>
-  <div data-custom-attr="header">Header</div>
-  <div data-custom-attr="footer">Footer</div>
+<main data-dom-parent="main">
+  <h1 data-dom="title">Title</h1>
+  <p data-dom="text">Text</p>
 </main>
 ```
 
 ```typescript
-const { header, footer } = getDataDom(
-  { header: "Header", footer: "Footer" },
-  document.querySelector("main"),
-  "custom-attr"
-);
+const elements = {
+  title: "Main title",
+  text: "Main text",
+};
 
-console.log(header); // <div data-custom-attr="header">Header</div>
-console.log(footer); // <div data-custom-attr="footer">Footer</div>
+const options = {
+  parent: "main",
+};
+
+try {
+  const { title, text, parent } = getDataDom(elements, options);
+  console.log(title); // <h1 data-dom="title">Title</h1>
+  console.log(text); // <p data-dom="text">Text</p>
+  console.log(parent); // <main data-dom-parent="main"></main>
+} catch (error) {
+  console.error("Error:", error.message);
+}
+```
+
+### Data Attribute Option
+
+```html
+<main>
+  <h1 data-custom-attr="title">Title</h1>
+  <p data-custom-attr="text">Text</p>
+</main>
+```
+
+```typescript
+const elements = {
+  title: "Main title",
+  text: "Main text",
+};
+
+const options = {
+  dataAttributeName: "custom-attr",
+};
+
+try {
+  const { title, text } = getDataDom(elements, options);
+  console.log(title); // <h1 data-custom-attr="title">Title</h1>
+  console.log(text); // <p data-custom-attr="text">Text</p>
+} catch (error) {
+  console.error("Error:", error.message);
+}
+```
+
+### Error Throw Option
+
+When errorThrow is set to false, instead of throwing an error, the function will return null and log an error message to the console. This allows the script to continue running even if the element is not found.
+
+```html
+<main>
+  <h1 data-dom="title">Title</h1>
+  <p data-dom="text">Text</p>
+</main>
+```
+
+```typescript
+const elements = {
+  title: "Main title",
+  text: "Main text",
+};
+
+const options = {
+  errorThrow: false,
+};
+
+const { title, text } = getDataDom(elements, options);
 ```
 
 ### Retrieving Multiple Elements
@@ -84,36 +177,67 @@ If there are multiple elements with the same data attribute value, getDataDom wi
 
 ```html
 <main>
-  <p data-dom="item">Item 1</p>
-  <p data-dom="item">Item 2</p>
+  <p data-dom="texts">text 1</p>
+  <p data-dom="texts">text 2</p>
 </main>
 ```
 
 ```typescript
 const elements = {
-  item: "Items",
+  texts: "Texts",
 };
 
-const { item } = getDataDom(elements);
+try {
+  const { texts } = getDataDom(elements);
+  console.log(texts);
+} catch (error) {
+  console.error("Error:", error.message);
+}
 
-console.log(item);
 // [
-//   <p data-dom="item">Item 1</p>,
-//   <p data-dom="item">Item 2</p>
+//   <p data-dom="texts">text 1</p>
+//   <p data-dom="texts">text 2</p>
 // ]
 ```
 
 In this example, getDataDom returns an array for the item key because there are multiple elements with data-dom="item".
+
+### TypeScript Support
+
+```typescript
+type ElementType = {
+  title: string;
+  text: string;
+};
+
+const elements: ElementType = {
+  title: "Main title",
+  text: "Main text",
+};
+
+try {
+  const { title, text } = getDataDom<ElementType>(elements);
+  console.log(title); // <h1 data-dom="title">Title</h1>
+  console.log(text); // <p data-dom="text">Text</p>
+} catch (error) {
+  console.error("Error:", error.message);
+}
+```
 
 ### Error Handling
 
 If an element is not found, getDataDom will throw an error. This allows you to handle missing elements gracefully.
 
 ```typescript
+const elements = {
+  nonExistent: "Non-existent element",
+};
+
 try {
-  const { nonExistent } = getDataDom({ nonExistent: "Non-existent element" });
+  const { nonExistent } = getDataDom(elements);
 } catch (error) {
-  console.error("Error:", error.message); // Error: Element "Non-existent element" not found (data-dom="nonExistent")
+  console.error("Error:", error.message);
+  // Error: Element "Non-existent element" not found in parent HTML (data-dom="nonExistent")
 }
 ```
 
