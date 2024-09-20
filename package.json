@@ -1,5 +1,5 @@
 {
-  "name": "datadom",
+  "name": "@dd/datadom",
   "version": "1.0.0",
   "description": "A lightweight utility for retrieving DOM elements using custom data attributes.",
   "type": "module",
