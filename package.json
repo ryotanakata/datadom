@@ -14,7 +14,10 @@
     "lint": "eslint src --ext .ts",
     "prepublishOnly": "npm run lint && npm run test && npm run build"
   },
-  "repository": "github:ryotanakata/datadom",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryotanakata/datadom.git"
+  },
   "keywords": [
     "DOM",
     "data-attributes",
