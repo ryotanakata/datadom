@@ -11,7 +11,7 @@ A lightweight utility for retrieving DOM elements using custom data attributes.
 </main>
 
 <script type="module">
-  import { getDataDom } from "@dd/datadom";
+  import { getDataDom } from "@datadomjs/datadom";
 
   const elements = {
     title: "Title element",
@@ -33,25 +33,25 @@ A lightweight utility for retrieving DOM elements using custom data attributes.
 ### npm
 
 ```bash
-npm install @dd/datadom
+npm install @datadomjs/datadom
 ```
 
 ### yarn
 
 ```bash
-yarn add @dd/datadom
+yarn add @datadomjs/datadom
 ```
 
 ### pnpm
 
 ```bash
-pnpm add @dd/datadom
+pnpm add @datadomjs/datadom
 ```
 
 ### CDN
 
 ```html
-<script src="https://unpkg.com/@dd/datadom@1.0.0/dist/index.js"></script>
+<script src="https://unpkg.com/@datadomjs/datadom@1.0.0/dist/index.js"></script>
 ```
 
 ## Document
