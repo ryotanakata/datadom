@@ -51,7 +51,7 @@ pnpm add @datadomjs/datadom
 ### CDN
 
 ```html
-<script src="https://unpkg.com/@datadomjs/datadom@1.0.0/dist/index.js"></script>
+<script src="https://unpkg.com/@datadomjs/datadom@1.0.2/dist/index.js"></script>
 ```
 
 ## Document

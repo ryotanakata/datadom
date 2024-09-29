@@ -1,6 +1,6 @@
 {
   "name": "@datadomjs/datadom",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A lightweight utility for retrieving DOM elements using custom data attributes.",
   "type": "module",
   "exports": "./dist/index.js",
