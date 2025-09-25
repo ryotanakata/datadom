@@ -84,7 +84,6 @@ const getDataDom = <T extends Elements = Record<string, never>>(
       if (errorThrow) {
         throw new Error(messages);
       } else {
-        // eslint-disable-next-line no-console
         console.error(messages);
         return null;
       }
@@ -118,7 +117,6 @@ const getDataDom = <T extends Elements = Record<string, never>>(
       if (errorThrow) {
         throw new Error(messages);
       } else {
-        // eslint-disable-next-line no-console
         console.error(messages);
         return null;
       }
